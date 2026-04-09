@@ -1,34 +1,37 @@
-def garden_operations(growth: str, days: str, file: str, plant: str):
+def garden_operations(growth: str, days: int, file: str, age: int):
     try:
         growth_value = int(growth)
-        days_value = int(days)
     except ValueError:
-        print("Caught ValueError: invalid literal for int()")
-        try:
-            growth_value / days_value
-        except ZeroDivisionError:
-            print("Caught ZeroDivisionError: division by zero")
-            try:
-                file = open(file, "r")
-            except FileNotFoundError:
-                print(f"Caught FileNotFoundError: No such file '{file}'")
-            try:
-                plants = {"rose": 5, "tulip": 3, "daisy": 7}
-                print(plants[plant])
-            except KeyError:
-                print(f"Caught KeyError: 'missing{plant}'")
+        print(f"Caught ValueError: invalid literal "
+              f"for int() with base 10: '{growth}'")
+    try:
+        growth_rate = 10 / days
+    except ZeroDivisionError:
+        print("Caught ZeroDivisionError: division by zero")
+
+    try:
+        with open(file, "r") as f:
+            data = f.read()
+    except FileNotFoundError:
+        print(f"Caught FileNotFoundError: [Errno 2] No such file or directory: '{file}'")
+
+    try:
+        plant_ages = age + days
+
+    except TypeError:
+        print('Caught TypeError: can only concatenate str (not "int") to str')
 
 
 def test_error_types():
     print("=== Testing Different Error Types ===\n")
     print("Testing ValueError...")
-    garden_operations("1", "10", "garden.txt", "rose")
+    garden_operations("abc", 10, "garden.txt", "rose")
     print("\nTesting ZeroDivisionError...")
-    garden_operations("10", "0", "garden.txt", "rose")
+    garden_operations(10, 0, "garden.txt", "rose")
     print("\nTesting FileNotFoundError...")
-    garden_operations("10", "5", "nonexistent.txt", "rose")
+    garden_operations(10, 5, "nonexistent.txt", "rose")
     print("\nTesting KeyError...")
-    garden_operations("10", "5", "garden.txt", "sunflower")
+    garden_operations(10, 5, "garden.txt", "sunflower")
 
 
 if __name__ == "__main__":
