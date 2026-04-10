@@ -11,37 +11,26 @@ class WaterError(GardenError):
 
 
 def erro(plant: str, tank_water: int) -> None:
-    if plant == "tomato":
+    if plant[0] < "A" or plant[0] > "Z":
         raise PlantError(f"Caught PlantError: The {plant} plant is wilting!")
     if tank_water < 5:
         raise WaterError("Caught WaterError: Not enough water in the tank!")
 
 
-def Test() -> None:
+def Test(plant: str, tank_water: int) -> None:
     try:
-        plant: str = "tomato"
-        tank: int = 5
-        erro(plant, tank)
-    except PlantError as p:
-        print("Testing PlantError...")
-        print(p)
-    try:
-        erro("carrot", 2)
-    except WaterError as w:
-        print("\nTesting WaterError...")
-        print(w)
-    try:
-        erro(plant, 5)
-    except GardenError as g:
-        print("\nTesting catching all garden errors...")
-        print(g)
-    try:
-        erro("carrot", 2)
+        erro(plant, tank_water)
     except GardenError as g:
         print(g)
-    print("\nAll custom error types work correctly!")
 
 
 if __name__ == "__main__":
     print("=== Custom Garden Errors Demo ===\n")
-    Test()
+    print("Testing PlantError...")
+    Test("tomato", 5)
+    print("\nTesting WaterError...")
+    Test("Lettuce", 3)
+    print("\nTesting catching all garden errors...")
+    Test("carrot", 5)
+    Test("Carrots", 3)
+    print("\nAll custom error types work correctly!")
